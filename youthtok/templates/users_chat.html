@@ -1,0 +1,20 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="middle">
+	<div class="stories">
+	<img src="{{user.pic.url}}">
+	<p>@{{request.user.username}}</p>
+
+
+{% for f in friends %}
+<a href="{% url 'userschat' friend.profile_id %}"></a>
+<img src="{{f.profile.pic.url}}" height="60" width="60">
+<p>{{f.profile.name}}</p>
+{% endfor %}
+</div>
+</div>
+
+
+{% endblock content %}

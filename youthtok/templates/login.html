@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% load crispy_forms_tags %}
+<link rel="stylesheet" type="text/css" href="{% static  'css/login_design.css' %}">
+<div class="container">
+		<div class="login-left">
+			<div class="login-header">
+				<h2>Welcome Back</h2>
+				<p>Login Here</p>
+			{% for message in messages %}
+			<p id="messages">{{message}}</p>
+			{% endfor %}
+			</div>
+			<form class="login-form" action="" method="POST" autocomplete="on">
+				{% csrf_token %}
+				<div class="login-form-content"> 
+					<div class="form-item">
+						<label for="username">Enter Username</label>
+						<input type="text" id="Username" name="username" required>
+					</div>
+					<div class="form-item">
+						<label for="password">Enter Password</label>
+						<input type="password" id="password" name="password" required>
+					</div>
+					<div class="form-item">
+						<div class="checkbox">
+							<input type="checkbox" id="rememberme"name="" checked>
+							<label for="rememberme" class="check">Remember Me</label>
+						</div>
+					</div>
+					
+					<button class="login-button" type="submit">Sign In</button>
+				<div style="margin-bottom:0.3em; margin-top: -0.7em;">
+					<center>Or</center><br>
+					<a  href="facebook/login/?process=login" style="padding: 5% 20px; background:rgb(56, 56, 255); color:white; border-radius:30px;"><i class="fa fa-facebook-f" style="font-size: 20px; margin-right: 5px;"></i>login with Facebook</a><br>
+					<a href="" style="padding: 5% 20px; background:rgb(1, 184, 1); color:white; border-radius:30px;"><i class="fa fa-google" style="font-size: 20px; margin-right: 5px;"></i>login with google</a>
+					<a href="/signup/">New here? Register</a>
+				</div>
+
+
+				</div>
+				
+
+			</form>
+		</div>
+		<div class="login-right">
+			<img src="{% static 'images/login.jpg' %}">
+		</div>
+
+	</div>
+
+
+{% endblock content %}

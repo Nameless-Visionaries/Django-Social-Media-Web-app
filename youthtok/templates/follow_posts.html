@@ -1,0 +1,426 @@
+{% if user.is_authenticated %}
+
+<!DOCTYPE html>
+{% load unicorn %}
+{% load static %}
+
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/gallery-design.css' %}">
+	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">
+	<link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorgin="anonymous" ></script>
+	<title>Youth Ground ~ {{user}} </title>
+	{% unicorn_scripts %}
+</head>
+<body>
+<nav class="nav">
+    <div class="container">
+        <h2 class="logo" style="text-transform: none;"><i class="uil uil-comment" ></i>ctober</h2>
+    <form action="/search" method="POST">
+        {% csrf_token %}
+        <div class="search-bar">
+            <input type="search" placeholder="Search for Friends, People and Creators..." name="username" />				<button><i class="uil uil-search"></i></button>
+        </div>
+    </form>
+        <div class="create">
+            <a href="/post/">
+                <label class="btn btn-primary">Create Post</label>
+            </a>
+            <div class="profile-picture">
+                <a href="/profile/{{user}}">
+                <img src="{{user_profile.profileimg.url}}">
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+<main>
+<div class="container">
+    <!--------left side -------->
+        <div class="left">
+            <a href="/profile/{{user}}" class="profile">
+                <div class="profile-picture">
+                    <img src="{{user_profile.profileimg.url}}">
+                </div>
+                <div class="handle">
+                        <h4>{{user.first_name}} {{user.last_name}}<h4>
+                        <p class="text-muted">@{{user.username}}</p>						
+                </div>
+            </a>
+            <!------side bar------>
+            <div class="sidebar">
+                <a class="menu-items active" href="/gallery/">
+                    <span><i class="uil uil-home"></i></span> <h3>Home</h3>
+                </a>
+                <a class="menu-items" href="{% url 'chat' %}" id="messages-notifications">
+                    <span><i class="uil uil-envelope-alt"><small class="notifications-count">99+</small></i></span> <h3>messages</h3>
+                </a>
+                <a class="menu-items" id="notifications">
+                    <span><i class="uil uil-bell"><small class="notifications-count">9+</small></i></span> <h3>notifications</h3>
+
+                    <!------notification popups------>
+
+                    <div class="notifications-popup" style="box-shadow: 0 1px 20px 0 rgba(69,90,100,0.8);">
+                        <div>
+                            <div class="profile-picture">
+                                <img src="{% static 'images/man.jpg' %}">
+                            </div>
+                            <div class="notifications-body">
+                            <h4>You will see notifications here</h4><br>
+                                
+                                <b><li class="uil uil-bell"></li></b>
+                                
+                                
+                
+                                <small></small> 
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <a class="menu-items">
+                    <span><i class="uil uil-bookmark"></i></span> <h3>Video Lab</h3>
+                </a>
+                <a class="menu-items" href="/setting/">
+                    <span><i class="uil uil-setting"></i></span> <h3>Setup profile</h3>
+                </a>
+
+                <a class="menu-items" id="theme">
+                    <span><i class="uil uil-palette"></i></span> <h3>Theme</h3>
+                </a>
+
+            </div>
+            <!---------------side bar ended------------------>
+            <a href="{% url 'logout' %}" style="color: white;"><label class="btn btn-primary">Logout</label></a>
+        </div>
+        <!----------------------end left side------------------------------>
+
+
+
+
+
+
+
+        <!-----middle side------>
+
+        <div class="middle">
+            <!--------------stories--------------->
+            <div class="menu" style="display: flex; justify-content: space-between; ">
+                <a href="/feeds/">
+                    <h3 class="text-muted">following</h3>
+                </a>
+                <a href="/gallery/">
+                    <h3>Random Posts</h3>
+                </a>
+                <a href="{% url 'videos-lab' %}">
+                    <h3>Videos</h3>
+                </a>
+                
+                
+
+            </div>
+
+            <!----------------------end of stories-------------------->
+        <!---	<form method="POST" class="create-post">
+                {% csrf_token %}
+                <div class="profile-picture">
+                <a href="/profile/{{user}}">
+                    <img src="{{user_profile.profileimg.url}}">
+                </a>
+                </div>
+                <input type="text" name="text" placeholder="Wanna Tell the world something?" id="create-post">
+                <input type="submit" class="btn btn-primary" value="Post">
+            </form> --->
+
+            <!-------------feeds--------->
+            <div class="feeds">
+                <!-------------feed 1--------->
+                {% for post in posts reversed %}
+                <div class="feed">
+                    <div class="head">
+                        <div class="user">
+                            <!--
+                            <a href="/profile/{{post.user}}">
+                            <div class="profile-picture">
+                                <img src="{{post.profile.profileimg.url}}">
+                            </div>
+                            </a>-->
+                            <div class="info">
+                                <a href="/profile/{{post.user}}">
+                                <h3>@{{post.user}}</h3>
+                            </a>
+                                <small>posted on {{post.created_at}}</small>
+                            </div>
+                        </div>
+                        <span class="edit" ><i class="uil uil-ellipsis-h"></i></span>
+                        <datalist id="chs">
+                            <option for="photo" download>Save</option>
+                            <option>Delete</option>
+                            <option>Report</option>
+                        </datalist>
+                    </div>
+                <a href="{% url 'post-detail' post.pk %}">
+                    <div class="photo">
+                        <img src="{{post.image.url}}">
+                    </div>
+                </a>
+                <form  method="POST" action="{% url 'feedlike' post.pk %}" >
+                    <div class="action-buttons">
+                        <div class="interactions-button">
+                            
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.path }}" >
+                                <button type="submit" style="background-color: transparent; border:none; box-shadow:none;">
+                                    <span id="like"><a> <i class="uil uil-heart"></i> </a></span>
+                                </button>
+                            </form>
+                            <a href="{% url 'post-detail' post.pk %}">
+                                <span><i class="uil uil-comment-dots"></i></span>
+                            </a>
+                            <span><i class="uil uil-share-alt"></i></span>							
+                                                            
+                        </div>
+
+                    </div>
+
+                    <div class="liked-by">
+                        
+                        
+                        <p><b>{{ post.likes.all.count }}</b> likes</p>
+                        
+
+                    </div>
+
+                    <div class="caption">
+                        <p><b>{{post.user}}  </b>{{post.caption}}<span class="hash-tag"></span></p>
+                    </div>
+                <a href="{% url 'post-detail' post.pk %}">
+                    <div class="comments text-muted">
+                        Veiw comments
+                    </div>
+                </a>
+                </div>
+
+                {% endfor %}
+                <!----end of feed---->
+                {% for vid in video reversed %}
+					<div class="feed">
+						<div class="head">
+							<div class="user">
+								<!--
+								<a href="/profile/{{post.user}}">
+								<div class="profile-picture">
+									<img src="{{post.profile.profileimg.url}}">
+								</div>
+								</a>-->
+								<div class="info">
+									<a href="/profile/{{vid.user}}">
+									<h3>@{{vid.user}}</h3>
+								</a>
+									<small>posted on {{vid.created_at}}</small>
+								</div>
+							</div>
+							<span class="edit" ><i class="uil uil-ellipsis-h"></i></span>
+							<datalist id="chs">
+								<option for="photo" download>Save</option>
+								<option>Delete</option>
+								<option>Report</option>
+							</datalist>
+						</div>
+					
+						<div class="photo">
+							<video src="{{vid.video.url}}" controls="controls"></video>
+						</div>
+					
+					<form  method="POST" action="{% url 'like' vid.pk %}" >
+						<div class="action-buttons">
+							<div class="interactions-button">
+								
+									{% csrf_token %}
+									<input type="hidden" name="next" value="{{ request.path }}" >
+									<button type="submit" style="background-color: transparent; border:none; box-shadow:none;">
+										<span id="like"><a> <i class="uil uil-heart"></i> </a></span>
+									</button>
+								</form>
+								
+								<span><i class="uil uil-share-alt"></i></span>							
+																
+							</div>
+
+						</div>
+
+						<div class="liked-by">
+							
+							
+							<p><b>{{ vid.likes.all.count }}</b> likes</p>
+							
+
+						</div>
+
+						<div class="caption">
+							<p><b>{{vid.user}}  </b>{{vid.caption}}<span class="hash-tag"></span></p>
+						</div>
+
+					</div>
+
+					{% endfor %}
+
+
+                    <!-------------feed 1--------->
+                    
+                
+
+                <!-----demo feed 2----->
+            </div>
+            
+
+
+
+        </div>
+        <!-----------END OF MIDDLE ---------->
+    <!------right side------->
+        <div class="right">
+            <!--<div class="messages">
+                <div class="heading">
+                    <h4>Message Notifications</h4><i class="uil uil-edits"></i>
+                </div>
+                <div class="search-bar">
+                    <i class="uil uil-search"></i>
+                    <input type="search" id="message-search" placeholder="Search Messages...">
+                </div>
+                <!-messages category->
+                <div class="category">
+                    <h6 class="active">Primary</h6>
+                    <h6>General</h6>
+                    <h6 class="message-request">Requests</h6>
+                </div>
+                <!-mesgs->
+                <div class="message">
+                    <div class="profile-picture">
+                        <img src="{% static 'images/co.jpg' %}">
+                    </div>
+
+                    <div class="message-body">
+                        <h5>Caleb Wesley{{l}}</h5>
+                        <p class="text-muted">Hey! love Good morning!</p>
+                        <div class="active"></div>
+                    </div>
+                </div>
+
+                <div class="message">
+                    <div class="profile-picture">
+                        <img src="{% static 'images/m.jpg' %}">
+                        <div class="active"></div>
+                    </div>
+                    
+                    <div class="message-body">
+                        <h5>Loren james{{l}}</h5>
+                        <p class="text-muted">Just woke up lol!</p>
+                    </div>
+                </div>
+            </div>------------>
+            <!--------------------end of msgs---------------------->
+
+
+            <!-------------------follow---------------------->
+            <div class="friend-request">
+                <h4>Suggestions</h4>
+
+                {% for sugg in suggestions_username_profile_list %}
+                <div class="request">
+                    <div class="info">
+                        <div class="profile-picture">
+                            <img src="{{sugg.profileimg.url}}">
+                        </div>
+                        <div>
+                            <h5>{{sugg.user}}</h5>
+                            <p class="text-muted" style="text-overflow: ellipsis;">
+                                {{sugg.bio}}
+                            </p>
+                    
+                        </div>
+                    </div>
+                            <div class="action">
+                            <a href="{% url 'chat' %}">
+                                <button class="btn btn-primary">
+                                    Chat
+                                </button>
+                            </a>
+                            <a href="/profile/{{sugg.user}}">
+                                <button class="btn">
+                                    Veiw
+                                </button>
+                            </a>
+                            </div>
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+        <!------------------------end of right--------------------->
+</div>
+</main>
+
+<div class="customized-theme">
+<div class="card">
+    <h3>Hi there {{user.first_name}}</h3>
+    <h2>Customize Your View</h2>
+    <p class="text-muted">Manage your background and font size</p>
+
+    <!-------------Font sizes------------->
+    <div class="font-size">
+        <h4>Font size</h4>
+        <div>
+            <h6>Aa</h6>
+            <div class="choose-size">
+                <span class="font-size-1"></span>
+                <span class="font-size-2 active"></span>
+                <span class="font-size-3"></span>
+                <span class="font-size-4"></span>
+                <span class="font-size-5"></span>
+            </div>
+            <h3>Aa</h3>
+        </div>
+    </div>
+
+    <!---------------------colors---------------->
+    <div class="color">
+        <h4>Color</h4>
+        <div class="choose-color">
+            <span class="color-1 active"></span>
+            <span class="color-2"></span>
+            <span class="color-3"></span>
+            <span class="color-4"></span>
+            <span class="color-5"></span>
+        </div>
+    </div>
+
+
+
+
+    <!----------------------Background colors------------->
+    <div class="background">
+        <h4>Background</h4>
+        <div class="choose-bg">
+            <div class="bg-1 active">
+                <span></span>
+                <h5 for="bg-1">Light</h5>
+            </div>
+            <div class="bg-2">
+                <span></span>
+                <h5 for="bg-1">Dim</h5>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script  src="{% static 'js/index.js' %}"></script>
+</body>
+</html>
+{% endif %}

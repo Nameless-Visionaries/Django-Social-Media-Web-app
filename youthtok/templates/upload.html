@@ -1,0 +1,40 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div class="ctn" id="imgbox">
+	<form method="POST" action="/upload/" enctype="multipart/form-data" >
+		{% csrf_token %}
+<header>
+    <a href='/'>
+        <i class="uil uil-arrow-left"></i>
+    </a>
+    <button type="submit">Upload</button>
+ </header>
+
+
+<div class="create-post">
+<textarea id="textbox" placeholder="add caption" name="caption" required></textarea>
+<input type="file" name="image-upload" accept="image/*" id="file" style="display: none;" onchange="loadfile(event)" required>
+<label for='file'><img src="{% static 'images/upload.png' %}" class="upload-icon"></label>
+
+	</form>
+
+
+
+
+</div>
+<script type="text/javascript">
+	var textbox =  document.getElementById('textbox');
+	var imgbox =  document.getElementById('imgbox');
+
+	textbox.onkeyup = textbox.onkeypress = function() {
+		document.getElementById('prevtext').innerHTML = this.value;
+	}
+
+	var loadfile = function(event) {
+		imgbox.style.backgroundImage = "url(" + URL.createObjectURL(event.target.files[0]) + ")";
+	}
+
+</script>
+{% endblock content %}

@@ -1,0 +1,181 @@
+
+* {
+	box-sizing: border-box;
+}
+
+:root{
+	primary-color: #131086;
+	secondary-color: #b621f3;
+
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	font-family: "Inter", sans-serif;
+	background: linear-gradient(45deg, black, #666666);
+	padding: 40px;
+}
+#logo{
+	display: none;
+}
+#logo-font{
+			display: none;	
+		}
+
+.container{
+	margin-top: 1em;
+	min-height: calc(100vh - 40px * 2);
+	display: grid;
+	grid-template-columns: 50% 50%;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+.login-left{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-left: 150px;
+	background-color: white;
+}
+.login-right{
+	background-color: white;
+	display: flex;
+	justify-content: center;
+}
+img{
+		width: 100% !important;
+}
+
+
+.login-header{
+	margin-bottom: 10px;
+}
+h1 {
+	font-size: 40px;
+	margin-bottom: 7px;
+	}
+p{
+		opacity: .7;
+	}
+
+.login-form-content{
+		display: flex;
+		flex-direction: column;
+		gap: 35px;
+	}
+
+
+
+a {
+	flex: 6;
+	padding: .6rem;
+	justify-content: center;
+	display: flex;
+	color: black;
+	text-decoration: none;
+	align-items: center;
+}
+
+.form-item label:not(.check){
+	display: inline-block;
+	background-color: white;
+	margin-bottom: 5px;
+	position: absolute;
+	padding: 0 10px;
+	font-size: 14px;
+	transform: translate(30px, -10px);
+}
+input[type='first_name'],
+input[type='last_name'],
+input[type='text'],
+input[type='number'],
+input[type="number"],
+input[type='email'],
+input {
+	border-right:none;
+	border-top: none;
+	border-left: none;
+	border-bottom: 2px solid #666666;
+	height: 50px;
+	padding: 0 2rem;
+	width: 80%;
+	outline: none;
+	transition: background .35s;
+	font-size: 18px;
+
+}
+
+.checkbox{
+	display: flex;
+	align-items: center;
+	gap: 7px ;
+}
+
+input[type="checkbox"]{
+	width: 20px;
+	height: 20px;
+	accent-color: var(primary-color);
+}
+
+.signup-button{
+	border: none;
+	background: linear-gradient(45deg, black, #666666);
+	color: white;
+	padding: 1rem;
+	border-radius:100px;
+	text-align: center;
+	text-transform: uppercase ;
+	font-size: 18px;
+	cursor: pointer;
+	width: 80%;
+}
+
+@media (max-width: 1350px){
+	.login-left{
+		padding: 40px !important;
+	}
+	.login-form{
+		width: 100%;
+
+	}
+
+}
+
+@media(max-width: 768px){
+	body{
+		padding: 20px;
+	}
+	input[type='first_name'],
+	input[type='last_name'],
+	input[type='text'],
+	input[type='number'],
+	input[type="number"],
+	input[type='email']{
+	width: 100%;
+}
+	input{
+		width: 100%;
+	}
+
+	.container{
+		grid-template-columns: auto;
+	}
+	.login-right{
+		display: none;
+	}
+}
+@media(max-width: 667px){
+
+
+
+}
+@media(max-width: 815px){
+	h1{
+		font-size: 35px;
+	}
+
+
+
+}

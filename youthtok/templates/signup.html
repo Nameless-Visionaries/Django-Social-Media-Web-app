@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="{% static 'css/signup-design.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+<link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+	<title>Youth Ground ~ {{user}} </title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="login-right">
+			<img src="{% static 'images/sign_up.jpg' %}">
+		</div>
+		<div class="login-left">
+			<div class="login-header">
+				<h1>Join the Fun</h1>
+				
+				
+			{% for message in messages %}
+			<p id="messages">{{message}}</p>
+			{% endfor %}
+			</div>
+ 
+			<form class="login-form" action="" method="POST" autocomplete="on">
+				{% csrf_token %}
+				<div class="login-form-content"> 
+					<div class="form-item">
+						<label for="first-name">First Name</label>
+						<input type="text" id="first-name" name="first_name" required>
+					</div>
+					<div class="form-item">
+						<label for="last_name">Last Name</label>
+						<input type="text" id="last-name" name="last_name" required>
+					</div>
+					<div class="form-item">
+						<label for="username">Create username</label>
+						<input type="text" id="username" name="username" required>
+					</div>
+					<div class="form-item">
+						<label for="phone">Enter Email</label>
+						<input type="email" id="email" name="email" required>
+					</div>
+					<div class="form-item">
+						<label for="gender">Gender</label>
+						<input list="chs" id="gender" name="gender" required>
+						<datalist id="chs">
+							<option>Male</option>
+							<option>Female</option>
+							<option>Better not say</option>
+						</datalist>
+					</div>
+					<div class="form-item">
+						<label for="password1">Enter Password</label>
+						<input type="password" id="password" name="password" required>
+					</div>
+					<div class="form-item">
+						<label for="password2">Repeat Password</label>
+						<input type="password" id="password" name="password2" required>
+					</div>
+
+					<div class="form-item">
+						<div class="checkbox">
+							<input type="checkbox" id="rememberme"name="" required>
+							<label for="rememberme" class="check" ><a href="#">I agree with terms and condition</a></label>
+						</div>
+					</div>
+					
+					<button type="submit" class="signup-button" name="Create User">Sign Up</button>
+
+				</div>
+				<a href="/" id="not-resgistered">Already have an account? Login</a>
+			</form>
+			
+		</div>
+		
+	</div>
+
+
+</body>
+</html>

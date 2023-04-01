@@ -1,0 +1,104 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+<style type="text/css">
+    .left{
+        display: none;
+    }
+
+</style>
+<div class="header_wrapper">
+    <header>
+    <a href='/gallery/'>
+        <i class="uil uil-arrow-left"></i>
+    </a>
+    </header>
+
+    <div class="cols_container">
+        <div class="left_col">
+            <div class="img_container">
+                <img src="{{user_profile.profileimg.url}}">
+                <span></span>
+            </div>
+            <h2>@{{user_profile.user.username}}</h2>
+                <p>bio</p>
+
+                <ul class="about">
+                    {% if user_followers == 0 or user_followers == 1 %}
+                    <li><span>{{user_followers}}</span>Follower</li>
+                    {% else %}
+                    <li><span>{{user_followers}}</span>Followers</li>
+                    {% endif %}
+                    <li><span>{{user_following}}</span>Following</li>
+                    {% if user_post_length == 0 %}
+                    <li><span>{{user_post_length}}</span>Post</li>
+                    {% elif user_post_length == 1 %}
+                    <li><span>{{user_post_length}}</span>Post</li>
+                    {% else %}
+                    <li><span>{{user_post_length}}</span>Posts</li>
+                    {% endif %}
+                </ul>
+            <div class="content">
+                <p>
+                    {{user_profile.bio}}
+                </p>
+            </div>
+        </div>
+        <div class="right_col">
+            <nav>
+                <ul>
+
+                    <li>All Posts</li>
+                </ul>
+                <form id="like_form" action="/follow" method="POST">
+                    {% csrf_token %}
+                <input type="hidden" value="{{user.username}}" name="follower" id="follower"/>
+                <input type="hidden" value="{{user_object.username}}" name="user" id="user" />
+
+                {% if user_object.username == user.username %}
+                <a href="/setting" style="padding: 6% 20px; border-radius:30px ; color: white; background-color: hsl(252, 75%, 60%);">Account Setting</a>
+                {% else %}
+                <button type="submit">{{button_text}}</button>
+                {% endif %}
+                    </form>
+                
+            
+                    {% if user_object.username == user.username %}
+                    {% else %}
+            <a href="{% url 'chat' %}">
+                <button>Chat</button>
+            </a>
+                    {% endif %}
+            </nav>
+
+            <div class="photos">
+                {% for post in user_post reversed %}
+                <a href="{% url 'post-detail' post.pk %}">
+                    <img src="{{post.image.url}}"  />
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    
+
+</div>
+<script type="text/javascript" >
+	$(document).on('submit', '#like_form', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: '/follow',
+            data: {
+                follower:$('#follower').val(),
+                user:$('#user').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+            },
+       });
+	});
+</script>
+
+
+
+{% endblock %}

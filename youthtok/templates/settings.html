@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{%  static 'css/index.css' %}">
+	<link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}" />
+	<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css">	
+	<title>Youth Ground ~ {{user}} </title>
+</head>
+<body>
+	<form method="post" action="" enctype="multipart/form-data">
+		{% csrf_token %}
+	<div class="wrapper">
+		<a href="/">
+					<i class="uil uil-arrow-left"></i>
+				</a>
+		<div class="left">
+			<img src="{{user_profile.profileimg.url}}" alt="user" width="200" height="200"/>
+			<input id="image" name="image" type="file" style="display: none;">
+			<label for="image"><i class="uil uil-upload"></i> upload a picture</label><br><br><br>
+			<p><input name="bio" type="text" value="{{user_profile.bio}}"></p>
+		</div>
+		<div class="right">
+			<div class="info">
+				<div class="info">
+					<h3>Personal Info</h3>
+					<div class="info-data">
+						<div class="data">
+							<h4>Name</h4>
+							<p>{{user.first_name}} {{user.last_name}}</p>
+						</div>
+						<div class="data">
+							<h4>Email</h4>
+							<p>{{user.email}}</p>
+						</div>
+						<div class="data">
+							<h4>Location</h4>
+							<p><input type="text" name="location" value="{{user_profile.location}}"></p>
+						</div>
+					</div>
+					<div class="btns">
+					<a href="/profile/{{user}}">
+						<button type="button"><i class="uil uil-home"></i> Go Home</button>
+					</a>
+				<button type="submit"><i class="uil uil-save"></i>  Save Changes</button>
+			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+</body>
+</html>

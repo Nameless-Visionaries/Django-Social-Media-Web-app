@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+
+<div style="margin: 2rem; margin-bottom: -1em;">
+    <h1>showing search result</h1>
+</div>
+{% for users in username_profile_list %}
+<section style="margin-bottom: -5em;">
+    <div class="right" style="padding: 6% 20%;">
+        <div class="messages">
+            <div class="heading">
+            </div>
+            <div class="message">
+                <div class="profile-picture">
+                <a href="/profile/{{users.user}}">
+                    <img src="{{users.profileimg.url}}" height="70" width="70" style="object-fit: contain;">
+                </a>
+                </div>
+
+                <div class="message-body" style="margin-left: 2em !important;">
+                <a href="/profile/{{users.user}}">
+                    <h5>@{{users.user}}</h5>
+                </a>
+                    <p class="text-muted">{{users.location}}</p>
+                    <h6>{{users.bio}}</h6>
+                    <div class="active"></div>
+                </div>
+            </div>
+        </div>
+</section>
+   {% endfor %}
+
+{% endblock content %}
