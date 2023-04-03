@@ -53,7 +53,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'youthground.urls'
@@ -70,9 +69,6 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
-
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -138,31 +134,6 @@ STATICFILES_DIRS = [
 ]
 
 
-
-SITE_ID = 1
-SOCIALACCOUNT_PROVIDERS = {
-    'facebook': {
-        'METHOD': 'oauth2',
-       # 'SDK_URL':'//connect.facebook.net/{locate}/sdk.js',
-        'SCOPE': ['email', 'public_profile'],
-        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-        'INIT_PARAMS': {'cookie': True},
-        'FIELDS': {
-            'id',
-            'first_name',
-            'last_name',
-            'middle_name',
-            'name'
-            'name_format',
-            'picture',
-            'short_name',
-        },
-        'EXCHANGE_EMAIL': True,
-        'VERIFIED_EMAIL': False,
-        'VERSION': 'v7.0',     
-
-    }
-}
 
 LOGIN_URL = 'login'
 LOGOUT_URL ='logout'
