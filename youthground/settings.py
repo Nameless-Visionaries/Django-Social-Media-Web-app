@@ -39,15 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'youthtok',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
     #'social_django',
     'crispy_forms',
     'django_unicorn',
     'django.contrib.sites',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.facebook',
 ]
 
 MIDDLEWARE = [
