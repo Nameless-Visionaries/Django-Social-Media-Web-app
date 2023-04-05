@@ -9,3 +9,7 @@ Like, comment as well as deleting comments,
 Follow and unfollow,
 Feeds News,
 ![Web capture_3-4-2023_113920_localhost](https://user-images.githubusercontent.com/79472476/229457510-1df72ee1-a9e3-4803-ba55-0755b800b16c.jpeg)
+#What's next?
+frontend update,
+minor desgin improvement,
+make chat feathures functional
